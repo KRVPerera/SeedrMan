@@ -3,6 +3,7 @@
 //
 #include <catch2/catch_test_macros.hpp>
 #include <curl/curl.h>
+#include <iostream>
 
 unsigned int Factorial( unsigned int number ) {
     return number <= 1 ? number : Factorial(number-1)*number;
@@ -29,6 +30,7 @@ TEST_CASE( "simple get", "[curl]" )
 
         /* always cleanup */
         curl_easy_cleanup(curl);
+        std::cout << "I ran\n";
     }
 }
 

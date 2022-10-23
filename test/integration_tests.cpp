@@ -2,38 +2,51 @@
 // Created by ruksh on 9/27/2022.
 //
 #include <catch2/catch_test_macros.hpp>
-#include <curl/curl.h>
+//#include <curl/curl.h>
 #include <iostream>
 
 #include "library.h"
+#include <SFML/Network.hpp>
+
 
 unsigned int Factorial( unsigned int number ) {
     return number <= 1 ? number : Factorial(number-1)*number;
 }
 
 
-TEST_CASE( "simple get", "[curl]" )
-{
-    CURL *curl;
-    CURLcode res;
+//TEST_CASE( "simple get", "[curl]" )
+//{
+//    CURL *curl;
+//    CURLcode res;
+//
+//    curl = curl_easy_init();
+//    if(curl) {
+//        curl_easy_setopt(curl, CURLOPT_URL, "https://example.com");
+//        /* example.com is redirected, so we tell libcurl to follow redirection */
+//        curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1L);
+//
+//        /* Perform the request, res will get the return code */
+//        res = curl_easy_perform(curl);
+//        /* Check for errors */
+//        if(res != CURLE_OK)
+//            fprintf(stderr, "curl_easy_perform() failed: %s\n",
+//                    curl_easy_strerror(res));
+//
+//        /* always cleanup */
+//        curl_easy_cleanup(curl);
+//        std::cout << "I ran\n";
+//    }
+//}
 
-    curl = curl_easy_init();
-    if(curl) {
-        curl_easy_setopt(curl, CURLOPT_URL, "https://example.com");
-        /* example.com is redirected, so we tell libcurl to follow redirection */
-        curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1L);
+TEST_CASE("SFML network", "[simple get]") {
 
-        /* Perform the request, res will get the return code */
-        res = curl_easy_perform(curl);
-        /* Check for errors */
-        if(res != CURLE_OK)
-            fprintf(stderr, "curl_easy_perform() failed: %s\n",
-                    curl_easy_strerror(res));
 
-        /* always cleanup */
-        curl_easy_cleanup(curl);
-        std::cout << "I ran\n";
-    }
+// or
+    sf::Http http("http://www.some-server.org/");
+    sf::Http::Request request;
+// fill the request...
+    request.setMethod(sf::Http::Request::Get);
+    sf::Http::Response response = http.sendRequest(request);
 }
 
 TEST_CASE( "Factorials are computed", "[factorial]" ) {
